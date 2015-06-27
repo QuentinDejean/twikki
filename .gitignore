@@ -28,3 +28,7 @@ node_modules
 
 #Intellij files
 .idea
+
+
+#Bower files
+public/javascripts/bower_components

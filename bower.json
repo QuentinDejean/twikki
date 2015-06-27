@@ -1,0 +1,26 @@
+{
+  "name": "twikki",
+  "version": "0.0.1",
+  "homepage": "https://github.com/QuentinDejean/twikki",
+  "authors": [
+    "Quentin Dejean <quentin.dejean34@gmail.com>"
+  ],
+  "description": "Pulling tweets from Twitter and adding a description for highlighted words",
+  "main": "./bin/www",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "~1.4.1",
+    "angular-route": "~1.4.1"
+  }
+}
