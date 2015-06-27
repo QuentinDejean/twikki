@@ -31,4 +31,4 @@ node_modules
 
 
 #Bower files
-public/javascripts/bower_components
+client/javascripts/bower_components
