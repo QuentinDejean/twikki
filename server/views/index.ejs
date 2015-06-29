@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= title %></title>
-	<link rel='stylesheet' href='/stylesheets/style.css'/>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="/javascripts/bower_components/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body ng-app="twikki">
-	<h1><%= title %></h1>
-
-	<p>Welcome to <%= title %></p>
-
-	<div ng-view></div>
+	<div class="container">
+		<div ng-view></div>
+	</div>
 
 	<script src="/javascripts/bower_components/angular/angular.js"></script>
 	<script src="/javascripts/bower_components/angular-route/angular-route.js"></script>
 
 	<script src="/app/app.js"></script>
+	<script src="/app/config.js"></script>
+
+	<script src="/app/components/common/twitter/twitter.service.js"></script>
+	<script src="/app/components/common/twitter/twitter.builder.js"></script>
+
+	<script src="/app/components/common/twitter/tweet/tweet.directive.js"></script>
 
 	<script src="/app/components/home/home.controller.js"></script>
 	<script src="/app/components/home/home.js"></script>

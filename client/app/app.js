@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('twikki', ['ngRoute'])
-		.constant('Mapping' , {
+		.constant('mapping' , {
 			page: {},
 			service: {}
 		});

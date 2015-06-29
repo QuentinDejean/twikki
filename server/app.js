@@ -4,12 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var session = require('cookie-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var auth = require('./routes/auth');
+var twitter = require('./routes/twitter');
 
 var app = express();
 
@@ -25,15 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
-app.use(session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('./auth/twitter/auth.twitter').setup();
+//require('./auth/twitter/auth.twitter').setup();
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/auth', auth);
+app.use('/twitter', twitter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

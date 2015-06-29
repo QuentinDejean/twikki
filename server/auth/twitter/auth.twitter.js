@@ -1,3 +1,5 @@
+var userService = require('../auth.service');
+
 exports.setup = function () {
 	var passport = require('passport'),
 		TwitterStrategy = require('passport-twitter').Strategy;
@@ -12,6 +14,7 @@ exports.setup = function () {
 			callbackURL: "http://localhost:3000/auth/twitter/callback"
 		},
 		function(token, tokenSecret, profile, done) {
+			userService.authenticate(token, tokenSecret);
 			done();
 		}
 	));

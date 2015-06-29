@@ -1,11 +1,18 @@
 'use strict';
 
 var gulp = require('gulp'),
-    gls = require('gulp-live-server');
+    gls = require('gulp-live-server'),
+	wiredep = require('wiredep').stream;
 
 var config = {
-    server: './bin/www'
+    server: './bin/www',
+	index: './server/views/index.ejs'
 };
+
+gulp.task('bower', function () {
+	gulp.src(config.index)
+		.pipe(wiredep({directory: './client/javascripts/bower_components'}));
+});
 
 gulp.task('serve', function() {
     //1. run your script as a server

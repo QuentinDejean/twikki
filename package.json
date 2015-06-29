@@ -13,9 +13,8 @@
     "ejs": "~2.3.1",
     "express": "~4.12.4",
     "morgan": "~1.5.3",
-    "passport": "^0.2.2",
-    "passport-twitter": "^1.0.3",
-    "serve-favicon": "~2.2.1"
+    "serve-favicon": "~2.2.1",
+    "twitter": "^1.2.5"
   },
   "devDependencies": {
     "bower": "^1.4.1",
