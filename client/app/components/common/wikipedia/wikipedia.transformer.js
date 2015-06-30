@@ -2,7 +2,7 @@
     'use strict';
 
 	angular.module('twikki')
-		.factory('WikipediaBuilder', [ 'WikipediaService', '$q', function (WikipediaService, $q) {
+		.factory('WikipediaTransformer', [ 'WikipediaService', '$q', function (WikipediaService, $q) {
 
 			var buildDefinition = function (title) {
 				return $q(function (resolve, reject) {

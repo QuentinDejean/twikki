@@ -5,8 +5,8 @@
 		.config(['$tooltipProvider', function ($tooltipProvider) {
 			$tooltipProvider.setTriggers({'openTrigger': 'closeTrigger'});
 		}])
-		.directive('highlightedText', ['$document', '$window', 'WikipediaBuilder', '$timeout', 'mapping',
-			function ($document, $window, WikipediaBuilder, $timeout, mapping) {
+		.directive('highlightedText', ['$document', '$window', 'WikipediaTransformer', '$timeout', 'mapping',
+			function ($document, $window, WikipediaTransformer, $timeout, mapping) {
 				return {
 					replace: true,
 					template: ['<div popover="{{ popover.definition }}"',
@@ -60,7 +60,7 @@
 						};
 
 						var getDefinition = function (word) {
-							WikipediaBuilder.buildDefinition(word).then(function (definition) {
+							WikipediaTransformer.buildDefinition(word).then(function (definition) {
 								scope.popover.definition = definition.extract ? definition.extract : 'No definition is available for this word';
 								scope.popover.placement = elem.css('top') <= '200px' ? 'bottom' : 'top';
 							});

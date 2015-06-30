@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('twikki')
-		.factory('TwitterBuilder', ['TwitterService', '$q', function (TwitterService, $q) {
+		.factory('TwitterTransformer', ['TwitterService', '$q', function (TwitterService, $q) {
 
 			var addText = function (feed, status) {
 				feed.text = status.text;
