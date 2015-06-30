@@ -21,6 +21,30 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+var io = require('socket.io')(server);
+
+var TwitterStream = require('node-tweet-stream');
+
+var clientStream = new TwitterStream({
+	consumer_key: 'QwdAUzSbGjv1C5sI8ZTuIr05x',
+	consumer_secret: 'Ay45eQdOxNE19SNCetm9aUlHXpsjrMUXQZNSAij3CE35Koo9Dw',
+	token: '282461932-GdIiyIInE8u2Ms0LNjgcDR7MYN8X0D21P6a5Hh1u',
+	token_secret: '9gWKusXTlWHsvjw2Ao4wzuzZpb2GftROC6wgsIUBCP98D'
+});
+
+clientStream.on('tweet', function (tweet) {
+	console.log("tweet received!!");
+	io.emit('tweet', tweet);
+});
+
+clientStream.on('error', function (err) {
+	console.log('Oh no')
+});
+
+clientStream.track('nodejs');
+//clientStream.track('pizza');
+clientStream.track('tacos');
+
 /**
  * Listen on provided port, on all network interfaces.
  */
