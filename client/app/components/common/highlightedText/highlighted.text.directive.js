@@ -2,19 +2,26 @@
 	'use strict';
 
 	angular.module('twikki')
+		.config(['$tooltipProvider', function ($tooltipProvider) {
+			$tooltipProvider.setTriggers({'openTrigger': 'closeTrigger'});
+		}])
 		.directive('highlightedText', ['$document', '$window', '$rootScope', 'mapping', '$compile', 'WikipediaBuilder',
 			function ($document, $window, $rootScope, mapping, $compile, WikipediaBuilder) {
 				return {
+					//template: '<popover="{{ definition }}" ',
 					link: function (scope) {
 
-						var container;
+						var container, isVisible;
 
 						$document.bind('mouseup', function () {
 							var selection = $window.getSelection();
 
 							if (!selection.toString()) {
 								//trigger the hiding of the tooltip
-								//container.setAttribute('popover-enable', 'false');
+								if (isVisible) {
+									isVisible = false;
+									hideTooltip();
+								}
 								return;
 							}
 
@@ -22,13 +29,8 @@
 							var rect = range.getBoundingClientRect();
 
 							scope.definition = 'Loading...';
-							container.style.display = 'inline';
-							container.style.top = rect.top + 'px';
-							container.style.left = rect.left + 'px';
-							container.style.height = rect.height + 'px';
-							container.style.width = rect.width + 'px';
 
-							angular.element(container).triggerHandler('click');
+							displayTooltip(rect);
 
 							getDefinition(selection.toString());
 
@@ -37,11 +39,14 @@
 
 						var createTooltip = function () {
 							container = document.createElement('div');
-							container.setAttribute('popover', '{{ definition }}');
-							container.setAttribute('popover-placement', 'top');
-							container.setAttribute('popover-trigger', 'click');
-							container.style.position = 'fixed';
-							container.style.display = 'none';
+
+							angular.element(container)
+								.attr('popover', '{{ definition }}')
+								.attr('popover-placement', 'top')
+								.attr('popover-trigger', 'openTrigger')
+								.css({
+									position: 'fixed'
+								});
 
 							$compile(angular.element(container))(scope);
 
@@ -49,15 +54,36 @@
 						};
 
 
+						var displayTooltip = function (rect) {
+							console.log('displaying!!');
+							angular.element(container)
+								.css({
+								top: rect.top + 'px',
+								left: rect.left + 'px',
+								height: rect.height + 'px',
+								width: rect.width + 'px'
+							}).triggerHandler('openTrigger');
+
+							isVisible = true;
+						};
+
 						var getDefinition = function (word) {
 							WikipediaBuilder.buildDefinition(word).then(function (definition) {
 								scope.definition = definition.extract ? definition.extract : 'No definition is available for this word';
 							});
 						};
 
+						var hideTooltip = function () {
+							console.log("hiding!!");
+							angular.element(container).css({
+									height: 0
+								}).triggerHandler('closeTrigger');
+
+							isVisible = false;
+						};
+
 
 						createTooltip();
-
 					}
 				}
 			}]);
