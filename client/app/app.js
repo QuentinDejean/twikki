@@ -1,12 +1,12 @@
 (function () {
 	'use strict';
 
-	angular.module('twikki', ['ngRoute', 'ui.bootstrap'])
+	angular.module('twikki', ['ngRoute', 'ui.bootstrap', 'ngAnimate'])
 		.constant('mapping' , {
 			page: {},
 			service: {},
 			event: {
-				tooltip: 'tooltip'
+				tweet: 'tweet'
 			}
 		});
 })();

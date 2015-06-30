@@ -1,8 +1,8 @@
 (function () {
-    'use strict';
+	'use strict';
 
 	angular.module('twikki')
-		.factory('TwitterBuilder', [ 'TwitterService', '$q', function (TwitterService, $q) {
+		.factory('TwitterBuilder', ['TwitterService', '$q', function (TwitterService, $q) {
 
 			var addText = function (feed, status) {
 				feed.text = status.text;
@@ -16,22 +16,13 @@
 				}
 			};
 
-			var buildFeed = function () {
+			var getFeed = function () {
 
-				return $q(function (resolve, reject){
-					var	feeds = [];
+				return $q(function (resolve, reject) {
 
 					TwitterService.getFeed(function (data) {
-						console.log(data);
-						for (var i = 0; i < data.tweets.statuses.length; i ++) {
-							var feed = {};
-							var status = data.tweets.statuses[i];
 
-							addText(feed, status);
-							addUser(feed, status.user);
-
-							feeds.push(feed);
-						}
+						var feeds = buildFeed(data.tweets.statuses);
 
 						resolve(feeds);
 					}, function (error) {
@@ -41,8 +32,25 @@
 				});
 			};
 
+			var buildFeed = function (data) {
+				var feeds = [];
+
+				for (var i = 0; i < data.length; i++) {
+					var feed = {};
+					var status = data[i];
+
+					addText(feed, status);
+					addUser(feed, status.user);
+
+					feeds.push(feed);
+				}
+
+				return feeds;
+			};
+
 			return {
-				buildFeed: buildFeed
+				buildFeed: buildFeed,
+				getFeed: getFeed
 			}
 
 		}]);
