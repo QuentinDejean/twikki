@@ -5,13 +5,12 @@
 		.config(['$tooltipProvider', function ($tooltipProvider) {
 			$tooltipProvider.setTriggers({'openTrigger': 'closeTrigger'});
 		}])
-		.directive('highlightedText', ['$document', '$window', '$rootScope', 'mapping', '$compile', 'WikipediaBuilder',
-			function ($document, $window, $rootScope, mapping, $compile, WikipediaBuilder) {
+		.directive('highlightedText', ['$document', '$window', 'WikipediaBuilder',
+			function ($document, $window, WikipediaBuilder) {
 				return {
-					scope: {},
 					replace: true,
 					template: '<div popover="{{ definition }}" popover-placement="top" popover-trigger="openTrigger"></div>',
-					link: function (scope, elem, attrs) {
+					link: function (scope, elem) {
 
 						var isVisible;
 
