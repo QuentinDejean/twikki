@@ -5,7 +5,7 @@
 		.directive('tweet', function () {
 			return {
 				replace: true,
-				templateUrl: '/app/components/common/twitter/tweet/tweet.html',
+				templateUrl: '/app/components/common/tweet/tweet.html',
 				scope: {
 					description: '=description'
 				}

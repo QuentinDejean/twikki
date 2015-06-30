@@ -4,6 +4,18 @@
 	angular.module('twikki')
 		.factory('TwitterBuilder', [ 'TwitterService', '$q', function (TwitterService, $q) {
 
+			var addText = function (feed, status) {
+				feed.text = status.text;
+			};
+
+			var addUser = function (feed, user) {
+				feed.user = {
+					name: user.name,
+					username: user.screen_name,
+					profileImage: user.profile_image_url
+				}
+			};
+
 			var buildFeed = function () {
 
 				return $q(function (resolve, reject){
@@ -27,19 +39,6 @@
 					});
 
 				});
-			};
-
-
-			var addText = function (feed, status) {
-				feed.text = status.text;
-			};
-
-			var addUser = function (feed, user) {
-				feed.user = {
-					name: user.name,
-					username: user.screen_name,
-					profileImage: user.profile_image_url
-				}
 			};
 
 			return {
