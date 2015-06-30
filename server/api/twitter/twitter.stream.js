@@ -19,7 +19,5 @@ module.exports = function (io) {
 	});
 
 	clientStream.track('nodejs');
-	clientStream.track('tacos');
-
 };
 
