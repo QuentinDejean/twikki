@@ -8,16 +8,17 @@
 		.directive('highlightedText', ['$document', '$window', '$rootScope', 'mapping', '$compile', 'WikipediaBuilder',
 			function ($document, $window, $rootScope, mapping, $compile, WikipediaBuilder) {
 				return {
-					//template: '<popover="{{ definition }}" ',
-					link: function (scope) {
+					scope: {},
+					replace: true,
+					template: '<div popover="{{ definition }}" popover-placement="top" popover-trigger="openTrigger"></div>',
+					link: function (scope, elem, attrs) {
 
-						var container, isVisible;
+						var isVisible;
 
 						$document.bind('mouseup', function () {
 							var selection = $window.getSelection();
 
 							if (!selection.toString()) {
-								//trigger the hiding of the tooltip
 								if (isVisible) {
 									isVisible = false;
 									hideTooltip();
@@ -33,31 +34,18 @@
 							displayTooltip(rect);
 
 							getDefinition(selection.toString());
-
 						});
 
 
 						var createTooltip = function () {
-							container = document.createElement('div');
-
-							angular.element(container)
-								.attr('popover', '{{ definition }}')
-								.attr('popover-placement', 'top')
-								.attr('popover-trigger', 'openTrigger')
-								.css({
-									position: 'fixed'
-								});
-
-							$compile(angular.element(container))(scope);
-
-							$document[0].body.appendChild(container);
+							elem.css({
+								position: 'fixed'
+							});
 						};
 
 
 						var displayTooltip = function (rect) {
-							console.log('displaying!!');
-							angular.element(container)
-								.css({
+							elem.css({
 								top: rect.top + 'px',
 								left: rect.left + 'px',
 								height: rect.height + 'px',
@@ -74,10 +62,9 @@
 						};
 
 						var hideTooltip = function () {
-							console.log("hiding!!");
-							angular.element(container).css({
-									height: 0
-								}).triggerHandler('closeTrigger');
+							elem.css({
+								height: 0
+							}).triggerHandler('closeTrigger');
 
 							isVisible = false;
 						};
