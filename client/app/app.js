@@ -6,7 +6,8 @@
 			page: {},
 			service: {},
 			event: {
-				tweet: 'tweet'
+				tweet: 'tweet',
+				repaint: 'repaint'
 			}
 		});
 })();

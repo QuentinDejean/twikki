@@ -5,8 +5,8 @@
 		.config(['$tooltipProvider', function ($tooltipProvider) {
 			$tooltipProvider.setTriggers({'openTrigger': 'closeTrigger'});
 		}])
-		.directive('highlightedText', ['$document', '$window', 'WikipediaBuilder',
-			function ($document, $window, WikipediaBuilder) {
+		.directive('highlightedText', ['$document', '$window', 'WikipediaBuilder', '$timeout', 'mapping',
+			function ($document, $window, WikipediaBuilder, $timeout, mapping) {
 				return {
 					replace: true,
 					template: ['<div popover="{{ popover.definition }}"',
@@ -17,6 +17,10 @@
 
 						var isVisible;
 						scope.popover = {};
+
+						scope.$on(mapping.event.repaint, function () {
+							repaintTooltip();
+						});
 
 						$document.bind('mouseup', function () {
 							var selection = $window.getSelection();
@@ -40,21 +44,17 @@
 							getDefinition(selection.toString());
 						});
 
-
-						var createTooltip = function () {
-							elem.css({
-								position: 'fixed'
-							});
-						};
-
-
 						var displayTooltip = function (rect) {
 							elem.css({
 								top: rect.top + 'px',
 								left: rect.left + 'px',
 								height: rect.height + 'px',
 								width: rect.width + 'px'
-							}).triggerHandler('openTrigger');
+							});
+
+							scope.$digest();
+							elem.triggerHandler('openTrigger');
+							scope.$apply();
 
 							isVisible = true;
 						};
@@ -67,15 +67,38 @@
 						};
 
 						var hideTooltip = function () {
-							elem.css({
+							elem.triggerHandler('closeTrigger').css({
 								height: 0
-							}).triggerHandler('closeTrigger');
+							});
 
 							isVisible = false;
 						};
 
+						var paintTooltip = function () {
+							elem.css({
+								position: 'fixed'
+							});
+						};
 
-						createTooltip();
+
+						var repaintTooltip = function () {
+							hideTooltip();
+
+							$timeout(function () {
+								var selection = $window.getSelection();
+
+								if (selection.toString()) {
+
+									var range = selection.getRangeAt(0);
+									var rect = range.getBoundingClientRect();
+
+									displayTooltip(rect);
+								}
+							}, 500);
+						};
+
+
+						paintTooltip();
 					}
 				}
 			}]);
