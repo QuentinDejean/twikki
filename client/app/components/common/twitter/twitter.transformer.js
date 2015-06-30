@@ -20,13 +20,11 @@
 
 				return $q(function (resolve, reject) {
 
-					TwitterService.getFeed(function (data) {
+					TwitterService.getFeed().success(function (data) {
 
 						var feeds = buildFeed(data.tweets.statuses);
 
 						resolve(feeds);
-					}, function (error) {
-						reject();
 					});
 
 				});

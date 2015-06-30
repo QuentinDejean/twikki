@@ -8,20 +8,11 @@
 			var twitterBaseUrl = serverUrl + '/twitter';
 			var socket = io.connect("http://localhost:3000");
 
-			var getFeed = function (successHandler, errorHandler) {
-				$http.get(twitterBaseUrl + '/feed')
-					.success(function (data) {
-						successHandler(data);
-					})
-					.error(function (error) {
-						errorHandler(error);
-					});
+			var getFeed = function () {
+				return $http.get(twitterBaseUrl + '/feed');
 			};
 
 			var getStreamFeed = (function () {
-
-				console.log('listening for tweets!');
-
 				socket.on('tweet', function (tweet) {
 					$rootScope.$broadcast(mapping.event.tweet, tweet);
 				});

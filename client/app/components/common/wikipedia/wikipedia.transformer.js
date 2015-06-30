@@ -18,16 +18,14 @@
 						exchars: 300
 					};
 
-					WikipediaService.getDefinition(function (data) {
+					WikipediaService.getDefinition(params).success(function (data) {
 						definition = {};
 
 						var pages = toArray(data.query.pages);
 						addExtract(definition, pages[0]);
 
 						resolve(definition);
-					}, function (error) {
-						reject(error);
-					}, params);
+					});
 				});
 			};
 

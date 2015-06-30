@@ -7,14 +7,9 @@
 			var root = 'https://en.wikipedia.org/w/api.php';
 
 
-			var getDefinition = function (successHandler, errorHandler, params) {
+			var getDefinition = function (params) {
 				params.callback = 'JSON_CALLBACK';
-				$http.jsonp(root, {params: params})
-					.success(function (data) {
-						successHandler(data);
-					}).error(function (error) {
-						errorHandler(error);
-					});
+				return $http.jsonp(root, {params: params});
 			};
 
 			return {
