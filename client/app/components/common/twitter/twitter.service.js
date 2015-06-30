@@ -6,7 +6,7 @@
 			function ($http, serverUrl, $rootScope, mapping) {
 
 			var twitterBaseUrl = serverUrl + '/twitter';
-			var socket = io.connect("http://localhost:3000");
+			var socket = io.connect(serverUrl);
 
 			var getFeed = function () {
 				return $http.get(twitterBaseUrl + '/feed');
@@ -23,7 +23,6 @@
 				getFeed: getFeed,
 				getStreamFeed: getStreamFeed
 			}
-
 
 		}])
 })();
